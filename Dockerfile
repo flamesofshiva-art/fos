@@ -1,9 +1,10 @@
 FROM python:3.13-slim
 
-# pyswisseph is a C extension: needs gcc to BUILD, and libsqlite3 at RUNTIME.
-# python:3.13-slim omits both by default.
+# pyswisseph is mixed C/C++: most files need gcc, one file (swhdbxx.cpp)
+# needs g++. libsqlite3-0 is needed at runtime, libsqlite3-dev at build time.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
+    g++ \
     libsqlite3-0 \
     libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
